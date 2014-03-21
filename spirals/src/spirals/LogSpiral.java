@@ -3,7 +3,7 @@ package spirals;
 import java.lang.reflect.Array;
 import java.util.Arrays;
 
-public class GoldenSpiral {
+public class LogSpiral {
 
 	/**Generates an array of coordinates following an archmedian spiral */
 	double angle; //how quickly spiral turns. a
@@ -18,12 +18,14 @@ public class GoldenSpiral {
 		return cartesian;
 	}
 	
-	public double getR (double theta) {
+	/**not used but potentially useful */
+	private double getR (double theta) {
 		double r = this.angle + (this.distance * theta);
 		return r;
 	}
 	
-	public double getTheta(double angle, double r) {
+	
+	private double getTheta(double angle, double r) {
 		double theta = 0;
 		//double b = Math.log(this.getGoldenRatio()) / (Math.PI / 2);
 		double b = 0.1;
@@ -31,13 +33,15 @@ public class GoldenSpiral {
 		return theta;
 	}
 	
-	public double getGoldenRatio() {
+	
+	/** gets golden ratio */
+	public static double getGoldenRatio() {
 		return (1 + Math.pow(5, 0.5))/2;
 	}
 	
 	
 	
-	public GoldenSpiral(double angle, int length) {
+	public LogSpiral(double angle, int length) {
 		this.angle = angle;
 		this.length = length;
 	}
@@ -67,10 +71,15 @@ public class GoldenSpiral {
 	
 	public static void main(String[] args) {
 		
-		GoldenSpiral testas = new GoldenSpiral(0.00000001, 10);
-		//System.out.println(testas.getGoldenRatio());
+		/*set angle to golden ratio if you want golden spiral */
+		//GoldenSpiral testas = new GoldenSpiral(getGoldenRatio(), 10);
+		
+		/* Or some other type of logarithmic spiral */
+		LogSpiral testas = new LogSpiral(0.00000001, 10);
+		
 		double[][] spiral = testas.makeSpiral();
 		System.out.println(Arrays.deepToString(spiral));
+		//Output file
 		CSVWriter cr = new CSVWriter("test2.csv");
 		cr.writeArraytoFile(spiral);
 

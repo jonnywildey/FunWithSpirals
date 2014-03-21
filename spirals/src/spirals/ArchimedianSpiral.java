@@ -1,7 +1,5 @@
 package spirals;
 
-import java.lang.reflect.Array;
-import java.util.Arrays;
 
 public class ArchimedianSpiral {
 
@@ -10,7 +8,7 @@ public class ArchimedianSpiral {
 	double distance; //how dense spiral is packed. b
 	int length; //how many points we want
 	
-	/**poor polar to cartesian converter */
+	
 	public static double[] polarConv (double[] polar) {
 		double[] cartesian = new double[3];
 		
@@ -19,12 +17,13 @@ public class ArchimedianSpiral {
 		return cartesian;
 	}
 	
-	public double getR (double theta) {
+	/**not currently used but potentially useful */
+	private double getR (double theta) {
 		double r = this.angle + (this.distance * theta);
 		return r;
 	}
 	
-	public double getTheta(double angle, double r) {
+	private double getTheta(double angle, double r) {
 		double theta = (r - angle) / this.distance;
 		return theta;
 	}
@@ -39,12 +38,13 @@ public class ArchimedianSpiral {
 		double a = 0;
 		double[][] sArray = new double[this.length][];
 		
+		/* currently set at 3 dimensions for use with GoogleSketch.
+		 * You can make some pretty cool seashells etc. */
 		for (int i = 0; i < this.length; ++i) {
 			double[] tArray = new double[3];
 			a += this.angle;
 			tArray[0] = i;
 			tArray[1] = getTheta(a, i);
-			
 			tArray = polarConv(tArray);
 			tArray[2] = i;
 			sArray[i] = tArray;
@@ -58,7 +58,7 @@ public class ArchimedianSpiral {
 		
 		ArchimedianSpiral testas = new ArchimedianSpiral(0.5, 3, 120);
 		double[][] spiral = testas.makeSpiral();
-		System.out.println(Arrays.deepToString(spiral));
+		//output file
 		CSVWriter cr = new CSVWriter("test.csv");
 		cr.writeArraytoFile(spiral);
 
